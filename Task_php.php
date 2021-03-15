@@ -51,7 +51,7 @@
         }
 
 
-        $stmt = $mysqli->prepare("SELECT q.*,u.name,u.gender FROM questions q JOIN  users u ON  q.user_id = u.id  where catalog_id=? AND category=? ORDER BY id DESC");
+        $stmt = $mysqli->prepare("SELECT q.*,u.name,u.gender FROM questions q JOIN  users u ON  q.user_id = u.id  where catalog_id=?");
         $stmt->bind_param('i', intval($catId));
         $stmt->execute();
         $stmt->store_result();
@@ -93,7 +93,7 @@
         //5. Дата последнего заказа
 
         SELECT
-          u.name,u.phone,
+           u.name,u.phone,
            IFNULL(SUM(o.subtotal), 0),IFNULL(avg(o.subtotal), 0),IFNULL(max(o.created), 'Еще не заказывал')
         FROM orders o  right join users u on  o.user_id = u.id
         GROUP by u.id
